@@ -1,13 +1,16 @@
 <template>
   <div>
-    <div v-if="!isLoading">
+    <div>
       <h2>List Pokemon</h2>
       <div class="row">
         <Card v-for="(pokemon, idx) in pokemons" :key="idx" :data="pokemon" :index="idx" />
       </div>
-    </div>
-    <div v-else>
-      <Loading />
+      <div v-if="isLoading">
+        <Loading />
+      </div>
+      <div class="text-center pt-3 pb-5" v-if='!isLoading'>
+        <button class="btn btn-primary" @click="offset += limit">Load More</button>
+      </div>
     </div>
   </div>
 </template>
@@ -20,7 +23,9 @@ export default {
   data () {
     return {
       pokemons: [],
-      isLoading: false
+      isLoading: false,
+      offset: 0,
+      limit: 8
     }
   },
   components: {
@@ -30,7 +35,7 @@ export default {
   methods: {
     getPokemons () {
       this.isLoading = true
-      axios.get('http://pokeapi.salestock.net/api/v2/pokemon/?limit=20&offset=0')
+      axios.get(`http://pokeapi.salestock.net/api/v2/pokemon/?limit=${this.limit}&offset=${this.offset}`)
         .then(response => {
           const { data } = response
           this.pokemons.push(...data.results)
@@ -41,16 +46,15 @@ export default {
         .finally(_ => {
           this.isLoading = false
         })
-    },
-    getImage (index) {
-      const s = '000' + (index + 1)
-      const indexLength = (index + 1).toString().split('').length
-      const imageName = s.substr(indexLength)
-      return `https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${imageName}.png`
     }
   },
   created () {
     this.getPokemons()
+  },
+  watch: {
+    offset () {
+      this.getPokemons()
+    }
   }
 }
 </script>

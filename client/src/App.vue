@@ -1,8 +1,10 @@
 <template>
-  <div id="app bg-light">
+  <div id="app" class="bg-light" style="min-height: 98vh">
     <Navbar/>
-    <div class="container pt-3">
-      <router-view/>
+    <div class="text-left">
+      <div class="container pt-3">
+        <router-view/>
+      </div>
     </div>
   </div>
 </template>

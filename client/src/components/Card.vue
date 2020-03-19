@@ -1,11 +1,11 @@
 <template>
   <div class="col-md-3">
     <div class="card mb-3 shadow-sm text-center">
-      <div class="p-3">
+      <div class="p-1">
         <img class="img-fluid" :src="data.imageUrl ? data.imageUrl : image" alt="">
       </div>
       <div class="card-body">
-        <span class="text-capitalize">{{data.name}}</span>
+        <span class="text-capitalize"><b>{{data.name}}</b></span>
         <div class="mt-3" v-if="!data.id">
           <button class="btn btn-secondary btn-sm" @click="goToDetailPokemon">View Detail</button>
         </div>

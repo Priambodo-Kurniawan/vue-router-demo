@@ -8,7 +8,7 @@ var startGame = false
 var gameSet = {}
 
 app.get('/', function(req, res){
-  res.sendFile(__dirname + '/index.html')
+  res.send('active!!')
 });
 
 io.on('connection', function(socket){

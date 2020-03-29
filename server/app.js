@@ -2,6 +2,7 @@ const app = require('express')()
 const http = require('http').createServer(app)
 const io = require('socket.io')(http)
 const axios = require('axios')
+const PORT = process.env.PORT || 3000
 
 var players = []
 var startGame = false
@@ -96,6 +97,6 @@ io.on('connection', function(socket){
 });
 
 
-http.listen(3000, function(){
-  console.log('listening on *:3000');
+http.listen(PORT, function(){
+  console.log(`listening on *:${PORT}`);
 });

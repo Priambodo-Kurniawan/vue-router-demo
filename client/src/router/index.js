@@ -5,6 +5,7 @@ import ListCard from '../views/ListCard.vue'
 import ListPokemon from '../views/ListPokemon.vue'
 import DetailPokemon from '../views/DetailPokemon.vue'
 import Dashboard from '../views/Dashboard.vue'
+import Game from '../views/Game.vue'
 import PokemonDescription from '../components/PokemonDescription'
 import PokemonStats from '../components/PokemonStats'
 
@@ -26,7 +27,7 @@ const routes = [
     name: 'DetailPokemon',
     component: DetailPokemon,
     redirect: {
-      name: 'PokemonStats'
+      name: 'PokemonDescription'
     },
     children: [
       {
@@ -53,6 +54,11 @@ const routes = [
     meta: {
       requiresAuth: true
     }
+  },
+  {
+    path: '/game',
+    name: 'Game',
+    component: Game
   }
 ]
 

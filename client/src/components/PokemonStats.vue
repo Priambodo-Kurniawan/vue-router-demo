@@ -3,7 +3,7 @@
     <h2>
       Detail Data Pokemon
     </h2>
-    <table class="table table-striped">
+    <table class="table table-striped" v-if="stats.id">
       <thead>
         <tr>
           <th scope="col">#</th>
@@ -14,37 +14,51 @@
       <tbody>
         <tr>
           <th scope="row">1</th>
-          <td>Egg Groups</td>
-          <td class="text-capitalize">{{egg_groups}}</td>
+          <td>Types</td>
+          <td class="text-capitalize">{{types}}</td>
         </tr>
         <tr>
           <th scope="row">2</th>
-          <td>Evolves From Species</td>
-          <td class="text-capitalize">{{data.evolves_from_species.name ? data.evolves_from_species.name : '-'}}</td>
+          <td>Height</td>
+          <td class="text-capitalize">{{stats.height}}</td>
         </tr>
         <tr>
           <th scope="row">3</th>
-          <td>Growth Rate</td>
-          <td class="text-capitalize">{{data.growth_rate.name}}</td>
+          <td>Weight</td>
+          <td class="text-capitalize">{{stats.weight}}</td>
         </tr>
         <tr>
           <th scope="row">4</th>
-          <td>Habitat</td>
-          <td class="text-capitalize">{{data.habitat.name}}</td>
+          <td>Moves</td>
+          <td class="text-capitalize">{{moves}} ...</td>
         </tr>
       </tbody>
     </table>
+    <div v-if="!stats.id">
+      <Loading/>
+    </div>
   </div>
 </template>
 
 <script>
+import Loading from '../components/Loading'
 export default {
   name: 'PokemonStats',
-  props: ['data'],
+  components: {
+    Loading
+  },
+  props: ['data', 'stats'],
   computed: {
-    egg_groups () {
-      if (this.data) return this.data.egg_groups.map(d => d.name).join(', ')
-      return ''
+    types () {
+      return this.stats.types.map(data => data.type.name).join(', ')
+    },
+    moves () {
+      return this.stats.moves.map((data, i) => data.move.name).filter((data, i) => i < 10).join(', ')
+    }
+  },
+  created () {
+    if (!this.stats.id) {
+      this.$emit('getData')
     }
   }
 }

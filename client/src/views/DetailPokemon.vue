@@ -3,14 +3,14 @@
     <div class="row d-flex justify-content-center mt-5" v-if="!isLoading">
       <div class="col-md-3 text-center">
         <img :src="getImage()" alt="">
-        <h2>{{pokemon.name}}</h2>
+        <h2 class="text-capitalize">{{pokemon.name}}</h2>
         <div class="btn-group">
           <router-link :to="`/pokemon/${$route.params.name}/description`" class="btn btn-sm btn-outline-secondary">Description</router-link>
           <router-link :to="`/pokemon/${$route.params.name}/stats`" class="btn btn-sm btn-outline-secondary">Stats</router-link>
         </div>
       </div>
       <div class="col-md-5">
-        <router-view :data="pokemon"></router-view>
+        <router-view :data="pokemon" @getData="getDataPokemon" :stats="stats"></router-view>
       </div>
     </div>
     <div v-else>
@@ -26,7 +26,8 @@ export default {
   data () {
     return {
       pokemon: {},
-      isLoading: false
+      isLoading: false,
+      stats: {}
     }
   },
   components: {
@@ -53,6 +54,16 @@ export default {
         })
         .finally(_ => {
           this.isLoading = false
+        })
+    },
+    getDataPokemon () {
+      axios.get(`http://pokeapi.salestock.net/api/v2/pokemon/${this.pokemon.id}/`)
+        .then(response => {
+          const { data } = response
+          this.stats = data
+        })
+        .catch(err => {
+          console.log(err)
         })
     },
     getImage () {

@@ -9,6 +9,9 @@
         <li class="nav-item">
           <router-link to="/card" class="nav-link">Card</router-link>
         </li>
+        <li class="nav-item">
+          <router-link to="/game" class="nav-link">Game</router-link>
+        </li>
       </ul>
     </div>
   </div>
